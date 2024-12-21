@@ -1,2 +1,2 @@
-# binary-cross-entropy-practice
+# cross-entropy-practice
 Artificial Intelligence Course HW2
