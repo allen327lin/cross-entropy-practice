@@ -24,13 +24,11 @@ def cross_entropy(y, yHat):
     Returns:
     tf.Tensor: The cross-entropy loss value
     """
-    # Add small epsilon to prevent taking log of zero
+    # 設定數值邊界
     epsilon = 1e-15
-    # Clip predictions to prevent log(0)
+    # 為了避免 yHat 跑到無窮大或無窮小，因此設定 yHat 邊界
     yHat = tf.clip_by_value(yHat, epsilon, 1-epsilon)
-    
-    # Calculate cross entropy
-    # For each sample, sum -y * log(yHat) across all classes
+    # 回傳 Cross Entropy 的 Loss
     return -tf.reduce_mean(tf.reduce_sum(y * tf.math.log(yHat), axis=-1))
 
 def plot_training_history(history):

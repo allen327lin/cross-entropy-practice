@@ -17,8 +17,11 @@ CHARTS_FOLDER = "./charts/"
 
 
 def binary_cross_entropy(y, yHat):
+    # 設定數值邊界
     epsilon = 1e-15
+    # 為了避免 yHat 跑到無窮大或無窮小，因此設定 yHat 邊界
     yHat = tf.clip_by_value(yHat, epsilon, 1-epsilon)
+    # 回傳 Binary Cross Entropy 的 Loss
     return -tf.reduce_mean(y * tf.math.log(yHat) + (1-y) * tf.math.log(1-yHat))
 
 def plot_training_history(history):
@@ -94,7 +97,7 @@ if __name__ == "__main__":
     print(network.summary)
 
     # 訓練階段
-    history = network.fit(train_images, train_labels, epochs=10, batch_size=200, validation_split=0.2)
+    history = network.fit(train_images, train_labels, epochs=50, batch_size=200, validation_split=0.2)
     plot_training_history(history)
     # 測試階段
     test_loss, test_acc = network.evaluate(test_images, test_labels)
