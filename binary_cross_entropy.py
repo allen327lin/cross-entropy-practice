@@ -4,17 +4,64 @@ from keras.layers import Dense
 from keras.utils import to_categorical
 import tensorflow as tf
 import matplotlib.pyplot as plt
+from time import time, localtime, strftime
+import os
+from pathlib import Path
 
 
 # Select only two digits (e.g., 0 and 1)
 DIGIT_1 = 2  # First digit to classify
 DIGIT_2 = 5  # Second digit to classify
 
+CHARTS_FOLDER = "./charts/"
+
 
 def binary_cross_entropy(y, yHat):
     epsilon = 1e-15
     yHat = tf.clip_by_value(yHat, epsilon, 1-epsilon)
     return -tf.reduce_mean(y * tf.math.log(yHat) + (1-y) * tf.math.log(1-yHat))
+
+def plot_training_history(history):
+    """
+    Plot training & validation accuracy and loss values.
+    
+    Parameters:
+    history: Keras history object from model.fit()
+    """
+    # Create a figure with 2 subplots
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
+    
+    # Plot accuracy
+    ax1.plot(history.history['accuracy'], label='Training Accuracy')
+    ax1.plot(history.history['val_accuracy'], label='Validation Accuracy')
+    ax1.set_title('Model Accuracy')
+    ax1.set_xlabel('Epoch')
+    ax1.set_ylabel('Accuracy')
+    ax1.legend(loc='lower right')
+    ax1.grid(True)
+    
+    # Plot loss
+    ax2.plot(history.history['loss'], label='Training Loss')
+    ax2.plot(history.history['val_loss'], label='Validation Loss')
+    ax2.set_title('Model Loss')
+    ax2.set_xlabel('Epoch')
+    ax2.set_ylabel('Loss')
+    ax2.legend(loc='upper right')
+    ax2.grid(True)
+    
+    # Adjust layout
+    plt.tight_layout()
+
+    # Save the plot
+    format_time = strftime('%Y-%m-%d_%H-%M-%S', localtime(time()))
+    chart_filename_stem = CHARTS_FOLDER + "Binary-Cross-Entropy_" + format_time
+    if not Path(CHARTS_FOLDER).exists():
+        os.mkdir(CHARTS_FOLDER)
+    plt.savefig(chart_filename_stem, dpi=300, bbox_inches='tight')
+    print("\n", f"Chart saved as {chart_filename_stem}.png")
+
+    # Display the plot
+    # plt.show()
 
 
 if __name__ == "__main__":
@@ -47,7 +94,8 @@ if __name__ == "__main__":
     print(network.summary)
 
     # 訓練階段
-    network.fit(train_images, train_labels, epochs=10, batch_size=200)
+    history = network.fit(train_images, train_labels, epochs=10, batch_size=200, validation_split=0.2)
+    plot_training_history(history)
     # 測試階段
     test_loss, test_acc = network.evaluate(test_images, test_labels)
     print("Test Accuracy:", test_acc)
