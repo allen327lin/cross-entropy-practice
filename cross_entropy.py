@@ -13,17 +13,6 @@ CHARTS_FOLDER = "./charts/"
 
 
 def cross_entropy(y, yHat):
-    """
-    Calculates the cross-entropy loss between true labels and predicted probabilities
-    using TensorFlow operations.
-    
-    Parameters:
-    y: Ground truth labels, one-hot encoded (tf.Tensor)
-    yHat: Predicted probabilities from the model (tf.Tensor)
-    
-    Returns:
-    tf.Tensor: The cross-entropy loss value
-    """
     # 設定數值邊界
     epsilon = 1e-15
     # 為了避免 yHat 跑到無窮大或無窮小，因此設定 yHat 邊界
