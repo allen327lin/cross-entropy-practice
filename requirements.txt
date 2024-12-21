@@ -1,0 +1,13 @@
+absl-py==2.1.0
+h5py==3.12.1
+keras==3.7.0
+markdown-it-py==3.0.0
+mdurl==0.1.2
+ml_dtypes==0.5.0
+namex==0.0.8
+numpy==2.2.0
+optree==0.13.1
+packaging==24.2
+Pygments==2.18.0
+rich==13.9.4
+typing_extensions==4.12.2
