@@ -10,8 +10,8 @@ from pathlib import Path
 
 
 # Select only two digits (e.g., 0 and 1)
-DIGIT_1 = 2  # First digit to classify
-DIGIT_2 = 5  # Second digit to classify
+DIGIT_1 = 6  # First digit to classify
+DIGIT_2 = 7  # Second digit to classify
 
 CHARTS_FOLDER = "./charts/"
 
@@ -92,12 +92,14 @@ if __name__ == "__main__":
     # 建立人工神經網路
     network = Sequential()
     network.add(Dense(512, activation='relu', input_shape=(784,)))
+    network.add(Dense(128, activation='relu', input_shape=(784,)))
+    network.add(Dense(32, activation='relu', input_shape=(784,)))
     network.add(Dense(1, activation='sigmoid'))
     network.compile(optimizer='rmsprop', loss=binary_cross_entropy, metrics=['accuracy'])
     print(network.summary)
 
     # 訓練階段
-    history = network.fit(train_images, train_labels, epochs=50, batch_size=200, validation_split=0.2)
+    history = network.fit(train_images, train_labels, epochs=25, batch_size=200, validation_split=0.2)
     plot_training_history(history)
     # 測試階段
     test_loss, test_acc = network.evaluate(test_images, test_labels)

@@ -83,7 +83,7 @@ if __name__ == "__main__":
     print(network.summary)
 
     # 訓練階段
-    history = network.fit(train_images, train_labels, epochs=10, batch_size=200, validation_split=0.2)
+    history = network.fit(train_images, train_labels, epochs=25, batch_size=200, validation_split=0.2)
     plot_training_history(history)
     # 測試階段
     test_loss, test_acc = network.evaluate(test_images, test_labels)
