@@ -1,7 +1,7 @@
-from keras.datasets import mnist
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.utils import to_categorical
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.utils import to_categorical
 import tensorflow as tf
 import matplotlib.pyplot as plt
 from time import time, localtime, strftime
@@ -91,9 +91,11 @@ if __name__ == "__main__":
 
     # 建立人工神經網路
     network = Sequential()
-    network.add(Dense(512, activation='relu', input_shape=(784,)))
-    network.add(Dense(128, activation='relu', input_shape=(784,)))
-    network.add(Dense(32, activation='relu', input_shape=(784,)))
+    network.add(Dense(512, activation='relu', input_shape=(784,), kernel_initializer='he_normal'))
+    network.add(Dropout(0.5))
+    network.add(Dense(128, activation='relu', input_shape=(784,), kernel_initializer='he_normal'))
+    network.add(Dropout(0.5))
+    network.add(Dense(32, activation='relu', input_shape=(784,), kernel_initializer='he_normal'))
     network.add(Dense(1, activation='sigmoid'))
     network.compile(optimizer='rmsprop', loss=binary_cross_entropy, metrics=['accuracy'])
     print(network.summary)

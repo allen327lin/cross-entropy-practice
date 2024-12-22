@@ -1,7 +1,7 @@
-from keras.datasets import mnist
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.utils import to_categorical
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.utils import to_categorical
 import tensorflow as tf
 import matplotlib.pyplot as plt
 from time import time, localtime, strftime
